@@ -1,0 +1,123 @@
+Traceback (most recent call last):
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\nbclient\client.py", line 1305, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\pmarshal\Anaconda3\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\nbclient\client.py", line 705, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\pmarshal\Anaconda3\lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+alt.data_transformers.disable_max_rows()
+
+title2 = alt.TitleParams(
+   text='Lower Capilano Watershed',
+   subtitle="Cummulative Precipitation - Water Year (2003-2024)",
+   anchor='middle',
+   fontSize=14,
+   fontWeight='bold')
+# Create a selection for the year
+#wtr_year_selection = alt.selection_single(
+#    name='Select',
+#    fields=['wtr_yr'],
+#    bind=alt.binding_select(options=list(qd_pc['date'].dt.year.unique()), name='Select Year '),
+#    init={'wtr_yr': 2024}  # Initial selected year
+#)
+
+wtr_year_selection = alt.selection_single(
+    name='Select',
+    fields=['wtr_yr'],
+    bind=alt.binding_select(options=list(qd_pc['wtr_yr'].unique()), name='Select Year '),
+    init={'wtr_yr': 2024}  # Initial selected year
+)
+
+# Create a line chart using Altair
+chart2 = alt.Chart(qd_pc, title=title2).mark_line().encode(
+    alt.X('wtr_yr_day', title ='Water Year - October 1 (0) to September 30 (365)', scale=alt.Scale(domain=[0,365], nice=False), axis=alt.Axis(values=[1,32,62,93,124,152,183,213,244,274,305,336])),
+    alt.Y('rain_cum_wyr', title='Accumulated Precipitation (mm)'),
+    color=alt.condition(wtr_year_selection, 'wtr_yr:N', alt.value('gray'), title='Water Year'),
+    strokeWidth=alt.condition(wtr_year_selection, alt.value(2.5), alt.value(1)),
+    opacity=alt.condition(wtr_year_selection, alt.value(1.0), alt.value(0.6))
+).add_selection(
+    wtr_year_selection
+).properties(
+    width=600
+)
+
+chart2
+------------------
+
+----- stderr -----
+C:\Users\pmarshal\Anaconda3\lib\site-packages\altair\utils\deprecation.py:65: AltairDeprecationWarning: 'selection_single' is deprecated.  Use 'selection_point'
+  warnings.warn(message, AltairDeprecationWarning, stacklevel=1)
+C:\Users\pmarshal\Anaconda3\lib\site-packages\altair\vegalite\v5\api.py:381: AltairDeprecationWarning: Use 'value' instead of 'init'.
+  warnings.warn(
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mTypeError[0m                                 Traceback (most recent call last)
+Cell [1;32mIn[22], line 17[0m
+[0;32m      3[0m title2 [38;5;241m=[39m alt[38;5;241m.[39mTitleParams(
+[0;32m      4[0m    text[38;5;241m=[39m[38;5;124m'[39m[38;5;124mLower Capilano Watershed[39m[38;5;124m'[39m,
+[0;32m      5[0m    subtitle[38;5;241m=[39m[38;5;124m"[39m[38;5;124mCummulative Precipitation - Water Year (2003-2024)[39m[38;5;124m"[39m,
+[0;32m      6[0m    anchor[38;5;241m=[39m[38;5;124m'[39m[38;5;124mmiddle[39m[38;5;124m'[39m,
+[0;32m      7[0m    fontSize[38;5;241m=[39m[38;5;241m14[39m,
+[0;32m      8[0m    fontWeight[38;5;241m=[39m[38;5;124m'[39m[38;5;124mbold[39m[38;5;124m'[39m)
+[0;32m      9[0m [38;5;66;03m# Create a selection for the year[39;00m
+[0;32m     10[0m [38;5;66;03m#wtr_year_selection = alt.selection_single([39;00m
+[0;32m     11[0m [38;5;66;03m#    name='Select',[39;00m
+[1;32m   (...)[0m
+[0;32m     14[0m [38;5;66;03m#    init={'wtr_yr': 2024}  # Initial selected year[39;00m
+[0;32m     15[0m [38;5;66;03m#)[39;00m
+[1;32m---> 17[0m wtr_year_selection [38;5;241m=[39m [43malt[49m[38;5;241;43m.[39;49m[43mselection_single[49m[43m([49m
+[0;32m     18[0m [43m    [49m[43mname[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mSelect[39;49m[38;5;124;43m'[39;49m[43m,[49m
+[0;32m     19[0m [43m    [49m[43mfields[49m[38;5;241;43m=[39;49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mwtr_yr[39;49m[38;5;124;43m'[39;49m[43m][49m[43m,[49m
+[0;32m     20[0m [43m    [49m[43mbind[49m[38;5;241;43m=[39;49m[43malt[49m[38;5;241;43m.[39;49m[43mbinding_select[49m[43m([49m[43moptions[49m[38;5;241;43m=[39;49m[38;5;28;43mlist[39;49m[43m([49m[43mqd_pc[49m[43m[[49m[38;5;124;43m'[39;49m[38;5;124;43mwtr_yr[39;49m[38;5;124;43m'[39;49m[43m][49m[38;5;241;43m.[39;49m[43munique[49m[43m([49m[43m)[49m[43m)[49m[43m,[49m[43m [49m[43mname[49m[38;5;241;43m=[39;49m[38;5;124;43m'[39;49m[38;5;124;43mSelect Year [39;49m[38;5;124;43m'[39;49m[43m)[49m[43m,[49m
+[0;32m     21[0m [43m    [49m[43minit[49m[38;5;241;43m=[39;49m[43m{[49m[38;5;124;43m'[39;49m[38;5;124;43mwtr_yr[39;49m[38;5;124;43m'[39;49m[43m:[49m[43m [49m[38;5;241;43m2024[39;49m[43m}[49m[43m  [49m[38;5;66;43;03m# Initial selected year[39;49;00m
+[0;32m     22[0m [43m)[49m
+[0;32m     24[0m [38;5;66;03m# Create a line chart using Altair[39;00m
+[0;32m     25[0m chart2 [38;5;241m=[39m alt[38;5;241m.[39mChart(qd_pc, title[38;5;241m=[39mtitle2)[38;5;241m.[39mmark_line()[38;5;241m.[39mencode(
+[0;32m     26[0m     alt[38;5;241m.[39mX([38;5;124m'[39m[38;5;124mwtr_yr_day[39m[38;5;124m'[39m, title [38;5;241m=[39m[38;5;124m'[39m[38;5;124mWater Year - October 1 (0) to September 30 (365)[39m[38;5;124m'[39m, scale[38;5;241m=[39malt[38;5;241m.[39mScale(domain[38;5;241m=[39m[[38;5;241m0[39m,[38;5;241m365[39m], nice[38;5;241m=[39m[38;5;28;01mFalse[39;00m), axis[38;5;241m=[39malt[38;5;241m.[39mAxis(values[38;5;241m=[39m[[38;5;241m1[39m,[38;5;241m32[39m,[38;5;241m62[39m,[38;5;241m93[39m,[38;5;241m124[39m,[38;5;241m152[39m,[38;5;241m183[39m,[38;5;241m213[39m,[38;5;241m244[39m,[38;5;241m274[39m,[38;5;241m305[39m,[38;5;241m336[39m])),
+[0;32m     27[0m     alt[38;5;241m.[39mY([38;5;124m'[39m[38;5;124mrain_cum_wyr[39m[38;5;124m'[39m, title[38;5;241m=[39m[38;5;124m'[39m[38;5;124mAccumulated Precipitation (mm)[39m[38;5;124m'[39m),
+[1;32m   (...)[0m
+[0;32m     34[0m     width[38;5;241m=[39m[38;5;241m600[39m
+[0;32m     35[0m )
+
+File [1;32m~\Anaconda3\lib\site-packages\altair\utils\deprecation.py:66[0m, in [0;36m_deprecate.<locals>.new_obj[1;34m(*args, **kwargs)[0m
+[0;32m     63[0m [38;5;129m@functools[39m[38;5;241m.[39mwraps(obj)
+[0;32m     64[0m [38;5;28;01mdef[39;00m [38;5;21mnew_obj[39m([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m     65[0m     warnings[38;5;241m.[39mwarn(message, AltairDeprecationWarning, stacklevel[38;5;241m=[39m[38;5;241m1[39m)
+[1;32m---> 66[0m     [38;5;28;01mreturn[39;00m obj([38;5;241m*[39margs, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32m~\Anaconda3\lib\site-packages\altair\vegalite\v5\api.py:707[0m, in [0;36mselection_single[1;34m(**kwargs)[0m
+[0;32m    701[0m [38;5;129m@utils[39m[38;5;241m.[39mdeprecation[38;5;241m.[39mdeprecated(
+[0;32m    702[0m     message[38;5;241m=[39m[38;5;124m"[39m[38;5;124m'[39m[38;5;124mselection_single[39m[38;5;124m'[39m[38;5;124m is deprecated.  Use [39m[38;5;124m'[39m[38;5;124mselection_point[39m[38;5;124m'[39m[38;5;124m"[39m
+[0;32m    703[0m )
+[0;32m    704[0m [38;5;129m@utils[39m[38;5;241m.[39muse_signature(core[38;5;241m.[39mPointSelectionConfig)
+[0;32m    705[0m [38;5;28;01mdef[39;00m [38;5;21mselection_single[39m([38;5;241m*[39m[38;5;241m*[39mkwargs):
+[0;32m    706[0m [38;5;250m    [39m[38;5;124;03m"""'selection_single' is deprecated.  Use 'selection_point'"""[39;00m
+[1;32m--> 707[0m     [38;5;28;01mreturn[39;00m _selection([38;5;28mtype[39m[38;5;241m=[39m[38;5;124m"[39m[38;5;124mpoint[39m[38;5;124m"[39m, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+
+File [1;32m~\Anaconda3\lib\site-packages\altair\vegalite\v5\api.py:434[0m, in [0;36m_selection[1;34m(type, **kwds)[0m
+[0;32m    431[0m [38;5;28;01melse[39;00m:
+[0;32m    432[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m"""[39m[38;5;124m'[39m[38;5;124mtype[39m[38;5;124m'[39m[38;5;124m must be [39m[38;5;124m'[39m[38;5;124mpoint[39m[38;5;124m'[39m[38;5;124m or [39m[38;5;124m'[39m[38;5;124minterval[39m[38;5;124m'[39m[38;5;124m"""[39m)
+[1;32m--> 434[0m [38;5;28;01mreturn[39;00m param(select[38;5;241m=[39mselect, [38;5;241m*[39m[38;5;241m*[39mparam_kwds)
+
+File [1;32m~\Anaconda3\lib\site-packages\altair\vegalite\v5\api.py:403[0m, in [0;36mparam[1;34m(name, value, bind, empty, expr, **kwds)[0m
+[0;32m    401[0m     parameter[38;5;241m.[39mparam_type [38;5;241m=[39m [38;5;124m"[39m[38;5;124mselection[39m[38;5;124m"[39m
+[0;32m    402[0m [38;5;28;01melse[39;00m:
+[1;32m--> 403[0m     parameter[38;5;241m.[39mparam [38;5;241m=[39m core[38;5;241m.[39mSelectionParameter(
+[0;32m    404[0m         name[38;5;241m=[39mparameter[38;5;241m.[39mname, bind[38;5;241m=[39mbind, value[38;5;241m=[39mvalue, expr[38;5;241m=[39mexpr, [38;5;241m*[39m[38;5;241m*[39mkwds
+[0;32m    405[0m     )
+[0;32m    406[0m     parameter[38;5;241m.[39mparam_type [38;5;241m=[39m [38;5;124m"[39m[38;5;124mselection[39m[38;5;124m"[39m
+[0;32m    408[0m [38;5;28;01mreturn[39;00m parameter
+
+[1;31mTypeError[0m: altair.vegalite.v5.schema.core.SelectionParameter() got multiple values for keyword argument 'value'
+
