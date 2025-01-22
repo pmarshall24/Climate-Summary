@@ -9,6 +9,7 @@ logo: mv_logo.png
 # See https://jupyterbook.org/content/execute.html
 execute:
   execute_notebooks: force
+  kernel_name: python3  # Set the correct kernel here
 
 # Define the name of the latex output file for PDF builds
 latex:
