@@ -26,5 +26,7 @@ repository:
   path_to_book: docs  # Optional path to your book, relative to the repository root
   branch: master  # Which branch of the repository should be used when creating links (optional)
 
+html:
+  theme: "sphinx_book_theme"  # Ensure you're using the correct theme
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
