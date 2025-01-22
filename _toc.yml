@@ -4,12 +4,10 @@
 format: jb-book
 root: intro
 parts:
-  - caption: Overview
-    chapters:
-    - file: overview_map.ipynb
   - caption: Conditions Summaries
     chapters:
     - file: air-temps.ipynb
     - file: precip.ipynb
     - file: snowpack.ipynb
     - file: streamflow.ipynb
+    - file: drought-wildfire.ipynb
